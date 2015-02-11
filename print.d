@@ -1,0 +1,9 @@
+.\print.o: print.c
+.\print.o: C:\Keil\ARM\ARMCC\bin\..\include\stdio.h
+.\print.o: C:\Keil\ARM\Inc\ST\STM32F4xx\stm32f4xx.h
+.\print.o: C:\Keil\ARM\CMSIS\Include\core_cm4.h
+.\print.o: C:\Keil\ARM\ARMCC\bin\..\include\stdint.h
+.\print.o: C:\Keil\ARM\CMSIS\Include\core_cmInstr.h
+.\print.o: C:\Keil\ARM\CMSIS\Include\core_cmFunc.h
+.\print.o: C:\Keil\ARM\CMSIS\Include\core_cm4_simd.h
+.\print.o: C:\Keil\ARM\Inc\ST\STM32F4xx\system_stm32f4xx.h

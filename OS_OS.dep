@@ -1,0 +1,20 @@
+Dependencies for Project 'OS', Target 'OS': (DO NOT MODIFY !)
+F (.\print.c)(0x533085C9)(-c --cpu Cortex-M4.fp -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F4xx-DSTM32F40XX-o .\print.o --omf_browse .\print.crf --depend .\print.d)
+I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x51C80BA4)
+I (C:\Keil\ARM\Inc\ST\STM32F4xx\stm32f4xx.h)(0x51C80448)
+I (C:\Keil\ARM\CMSIS\Include\core_cm4.h)(0x51C809AA)
+I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C80BA4)
+I (C:\Keil\ARM\CMSIS\Include\core_cmInstr.h)(0x51C809AA)
+I (C:\Keil\ARM\CMSIS\Include\core_cmFunc.h)(0x51C809AA)
+I (C:\Keil\ARM\CMSIS\Include\core_cm4_simd.h)(0x51C809AA)
+I (C:\Keil\ARM\Inc\ST\STM32F4xx\system_stm32f4xx.h)(0x51C80448)
+F (.\startup_simple-M4.s)(0x532CA86E)(--cpu Cortex-M4.fp --pd "__EVAL SETA 1" -g --apcs=interwork --pd "__MICROLIB SETA 1"-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F4xx--list .\startup_simple-m4.lst --xref -o .\startup_simple-m4.o --depend .\startup_simple-m4.d)
+F (.\system_stm32f4xx.c)(0x532CA8CD)(-c --cpu Cortex-M4.fp -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F4xx-DSTM32F40XX-o .\system_stm32f4xx.o --omf_browse .\system_stm32f4xx.crf --depend .\system_stm32f4xx.d)
+I (C:\Keil\ARM\Inc\ST\STM32F4xx\stm32f4xx.h)(0x51C80448)
+I (C:\Keil\ARM\CMSIS\Include\core_cm4.h)(0x51C809AA)
+I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C80BA4)
+I (C:\Keil\ARM\CMSIS\Include\core_cmInstr.h)(0x51C809AA)
+I (C:\Keil\ARM\CMSIS\Include\core_cmFunc.h)(0x51C809AA)
+I (C:\Keil\ARM\CMSIS\Include\core_cm4_simd.h)(0x51C809AA)
+I (C:\Keil\ARM\Inc\ST\STM32F4xx\system_stm32f4xx.h)(0x51C80448)
+F (.\os.s)(0x5331A48F)(--cpu Cortex-M4.fp --pd "__EVAL SETA 1" -g --apcs=interwork --pd "__MICROLIB SETA 1"-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F4xx--list .\os.lst --xref -o .\os.o --depend .\os.d)

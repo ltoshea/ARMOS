@@ -1,0 +1,330 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ; Simple startup file for COMS35102 Labs
+    2 00000000         ; based on STMicroelectronics "startup_stm32f4xx.s" file
+                       
+    3 00000000         ; (C) ST Microelectronics and Simon Hollis 2011-12
+    4 00000000         
+    5 00000000         ;******************** (C) COPYRIGHT 2011 STMicroelectron
+                       ics ********************
+    6 00000000         ;* File Name          : startup_stm32f4xx.s
+    7 00000000         ;* Author             : MCD Application Team
+    8 00000000         ;* Version            : V1.0.0
+    9 00000000         ;* Date               : 30-September-2011
+   10 00000000         ;* Description        : STM32F4xx devices vector table f
+                       or MDK-ARM toolchain. 
+   11 00000000         ;*                      This module performs:
+   12 00000000         ;*                      - Set the initial SP
+   13 00000000         ;*                      - Set the initial PC == Reset_Ha
+                       ndler
+   14 00000000         ;*                      - Set the vector table entries w
+                       ith the exceptions ISR address
+   15 00000000         ;*                      - Configure the system clock and
+                        the external SRAM mounted on 
+   16 00000000         ;*                        STM324xG-EVAL board to be used
+                        as data memory (optional, 
+   17 00000000         ;*                        to be enabled by user)
+   18 00000000         ;*                      - Branches to __main in the C li
+                       brary (which eventually
+   19 00000000         ;*                        calls main()).
+   20 00000000         ;*                      After Reset the CortexM4 process
+                       or is in Thread mode,
+   21 00000000         ;*                      priority is Privileged, and the 
+                       Stack is set to Main.
+   22 00000000         ;* <<< Use Configuration Wizard in Context Menu >>>   
+   23 00000000         ;*******************************************************
+                       ************************
+   24 00000000         ; THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS A
+                       T PROVIDING CUSTOMERS
+   25 00000000         ; WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN OR
+                       DER FOR THEM TO SAVE TIME.
+   26 00000000         ; AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIAB
+                       LE FOR ANY DIRECT,
+   27 00000000         ; INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY 
+                       CLAIMS ARISING FROM THE
+   28 00000000         ; CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOM
+                       ERS OF THE CODING
+   29 00000000         ; INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR 
+                       PRODUCTS.
+   30 00000000         ;*******************************************************
+                       ************************
+   31 00000000         
+   32 00000000         ; Amount of memory (in bytes) allocated for Stack
+   33 00000000         ; Tailor this value to your application needs
+   34 00000000         ; <h> Stack Configuration
+   35 00000000         ;   <o> Stack Size (in Bytes) <0x0-0xFFFFFFFF:8>
+   36 00000000         ; </h>
+   37 00000000         
+   38 00000000 00000400 
+                       Stack_Size
+                               EQU              0x00000400
+   39 00000000         
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+   40 00000000                 AREA             STACK, NOINIT, READWRITE, ALIGN
+=3
+   41 00000000         Stack_Mem
+                               SPACE            Stack_Size
+   42 00000400         __initial_sp
+   43 00000400         
+   44 00000400         
+   45 00000400         ; <h> Heap Configuration
+   46 00000400         ;   <o>  Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
+   47 00000400         ; </h>
+   48 00000400         
+   49 00000400 00000200 
+                       Heap_Size
+                               EQU              0x00000200
+   50 00000400         
+   51 00000400                 AREA             HEAP, NOINIT, READWRITE, ALIGN=
+3
+   52 00000000         __heap_base
+   53 00000000         Heap_Mem
+                               SPACE            Heap_Size
+   54 00000200         __heap_limit
+   55 00000200         
+   56 00000200                 PRESERVE8
+   57 00000200                 THUMB
+   58 00000200         
+   59 00000200         
+   60 00000200         ; Vector Table Mapped to Address 0 at Reset
+   61 00000200                 AREA             RESET, DATA, READONLY
+   62 00000000                 EXPORT           __Vectors
+   63 00000000                 EXPORT           __Vectors_End
+   64 00000000                 EXPORT           __Vectors_Size
+   65 00000000                 IMPORT           Reset_Handler
+   66 00000000                 IMPORT           SVC_Handler
+   67 00000000         
+   68 00000000 00000000 
+                       __Vectors
+                               DCD              __initial_sp ; Top of Stack
+   69 00000004 00000000        DCD              Reset_Handler ; Reset Handler
+   70 00000008 00000000        DCD              0x0
+   71 0000000C 00000000        DCD              0x0
+   72 00000010 00000000        DCD              0x0
+   73 00000014 00000000        DCD              0x0
+   74 00000018 00000000        DCD              0x0
+   75 0000001C 00000000        DCD              0x0
+   76 00000020 00000000        DCD              0x0
+   77 00000024 00000000        DCD              0x0
+   78 00000028 00000000        DCD              0x0
+   79 0000002C 00000000        DCD              SVC_Handler ; Interrupt Handler
+                                                            
+   80 00000030         __Vectors_End
+   81 00000030         
+   82 00000030 00000030 
+                       __Vectors_Size
+                               EQU              __Vectors_End - __Vectors
+   83 00000030         
+   84 00000030                 AREA             |.text|, CODE, READONLY
+   85 00000000         
+   86 00000000         
+   87 00000000                 ALIGN
+
+
+
+ARM Macro Assembler    Page 3 
+
+
+   88 00000000         
+   89 00000000         ;*******************************************************
+                       ************************
+   90 00000000         ; User Stack and Heap initialization
+   91 00000000         ;*******************************************************
+                       ************************
+   92 00000000                 IF               :DEF:__MICROLIB
+   93 00000000         
+   94 00000000                 EXPORT           __initial_sp
+   95 00000000                 EXPORT           __heap_base
+   96 00000000                 EXPORT           __heap_limit
+   97 00000000         
+   98 00000000                 ELSE
+  113                          ENDIF
+  114 00000000         
+  115 00000000                 END
+Command Line: --debug --xref --cpu=Cortex-M4.fp --apcs=interwork --depend=.\sta
+rtup_simple-m4.d -o.\startup_simple-m4.o -IC:\Keil\ARM\RV31\INC -IC:\Keil\ARM\C
+MSIS\Include -IC:\Keil\ARM\Inc\ST\STM32F4xx --predefine="__EVAL SETA 1" --prede
+fine="__MICROLIB SETA 1" --list=.\startup_simple-m4.lst startup_simple-M4.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+STACK 00000000
+
+Symbol: STACK
+   Definitions
+      At line 40 in file startup_simple-M4.s
+   Uses
+      None
+Comment: STACK unused
+Stack_Mem 00000000
+
+Symbol: Stack_Mem
+   Definitions
+      At line 41 in file startup_simple-M4.s
+   Uses
+      None
+Comment: Stack_Mem unused
+__initial_sp 00000400
+
+Symbol: __initial_sp
+   Definitions
+      At line 42 in file startup_simple-M4.s
+   Uses
+      At line 68 in file startup_simple-M4.s
+      At line 94 in file startup_simple-M4.s
+
+3 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+HEAP 00000000
+
+Symbol: HEAP
+   Definitions
+      At line 51 in file startup_simple-M4.s
+   Uses
+      None
+Comment: HEAP unused
+Heap_Mem 00000000
+
+Symbol: Heap_Mem
+   Definitions
+      At line 53 in file startup_simple-M4.s
+   Uses
+      None
+Comment: Heap_Mem unused
+__heap_base 00000000
+
+Symbol: __heap_base
+   Definitions
+      At line 52 in file startup_simple-M4.s
+   Uses
+      At line 95 in file startup_simple-M4.s
+Comment: __heap_base used once
+__heap_limit 00000200
+
+Symbol: __heap_limit
+   Definitions
+      At line 54 in file startup_simple-M4.s
+   Uses
+      At line 96 in file startup_simple-M4.s
+Comment: __heap_limit used once
+4 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+RESET 00000000
+
+Symbol: RESET
+   Definitions
+      At line 61 in file startup_simple-M4.s
+   Uses
+      None
+Comment: RESET unused
+__Vectors 00000000
+
+Symbol: __Vectors
+   Definitions
+      At line 68 in file startup_simple-M4.s
+   Uses
+      At line 62 in file startup_simple-M4.s
+      At line 82 in file startup_simple-M4.s
+
+__Vectors_End 00000030
+
+Symbol: __Vectors_End
+   Definitions
+      At line 80 in file startup_simple-M4.s
+   Uses
+      At line 63 in file startup_simple-M4.s
+      At line 82 in file startup_simple-M4.s
+
+3 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+.text 00000000
+
+Symbol: .text
+   Definitions
+      At line 84 in file startup_simple-M4.s
+   Uses
+      None
+Comment: .text unused
+1 symbol
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Absolute symbols
+
+Heap_Size 00000200
+
+Symbol: Heap_Size
+   Definitions
+      At line 49 in file startup_simple-M4.s
+   Uses
+      At line 53 in file startup_simple-M4.s
+Comment: Heap_Size used once
+Stack_Size 00000400
+
+Symbol: Stack_Size
+   Definitions
+      At line 38 in file startup_simple-M4.s
+   Uses
+      At line 41 in file startup_simple-M4.s
+Comment: Stack_Size used once
+__Vectors_Size 00000030
+
+Symbol: __Vectors_Size
+   Definitions
+      At line 82 in file startup_simple-M4.s
+   Uses
+      At line 64 in file startup_simple-M4.s
+Comment: __Vectors_Size used once
+3 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+External symbols
+
+Reset_Handler 00000000
+
+Symbol: Reset_Handler
+   Definitions
+      At line 65 in file startup_simple-M4.s
+   Uses
+      At line 69 in file startup_simple-M4.s
+Comment: Reset_Handler used once
+SVC_Handler 00000000
+
+Symbol: SVC_Handler
+   Definitions
+      At line 66 in file startup_simple-M4.s
+   Uses
+      At line 79 in file startup_simple-M4.s
+Comment: SVC_Handler used once
+2 symbols
+348 symbols in table
